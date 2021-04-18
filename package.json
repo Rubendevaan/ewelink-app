@@ -1,7 +1,7 @@
 {
   "name": "ewelink-deken",
   "productName": "Elektrische deken",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Applicatie voor het aan en uit zetten van mijn elektrische deken",
   "author": "Ruben de Vaan",
   "main": "main.js",
@@ -12,6 +12,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "electron-json-storage": "^4.5.0",
     "ewelink-api": "^3.1.1",
     "jquery": "^3.6.0"

@@ -3,7 +3,7 @@ const { app, BrowserWindow } = require('electron');
 function createWindow () {
   const win = new BrowserWindow({
     icon: 'img/appLogo.ico',
-    title: 'Deken',
+    title: 'Ewelink Desktop App',
     width: 300,
     height: 400,
     webPreferences: {
