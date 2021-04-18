@@ -1,21 +1,23 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
 
 function createWindow () {
   const win = new BrowserWindow({
     icon: 'img/appLogo.ico',
+    title: 'Deken',
     width: 300,
     height: 400,
     webPreferences: {
+      enableRemoteModule: true,
       nodeIntegration: true,
-      contextIsolation: false 
+      contextIsolation: false, 
     }
   })
   win.removeMenu();
   win.resizable = false;
   win.loadFile('index.html');
+  win.webContents.openDevTools();
 }
-
-app.whenReady().then(createWindow)
+app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

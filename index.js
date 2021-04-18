@@ -1,20 +1,26 @@
 const ewelink = require('ewelink-api');
-const buttonSvg = document.getElementById('imageColor');
+var officalConnection;
 
-/* ewelink authorisation data*/
-const connection = new ewelink({
-  email: '/* Put email from account in */',
-  password: '/* Put password from account in */',
-  region: '/* Put region from account in: example eu/us */'
-});
+async function connectEwelink(email, password, region) {
+  /* ewelink authorisation data*/
+  const connection = new ewelink({
+    email: email,
+    password: password,
+    region: region
+  });
 
-readPowerState();
+  return connection;
+};
 
 /* Checks the powerstate of the sonoff device */
-function readPowerState() {
-  (async () => {
+function readPowerState(connection) {
+  $('main').load('templates/button.html', async () => {
+    const buttonSvg = document.getElementById('imageColor');
+
     var status = await connection.getWSDevicePowerState('1000a1b44c');
     var stateDevice = status.state;
+
+    officalConnection = connection;
 
     if (stateDevice == 'on') {
       buttonSvg.style.backgroundColor = "rgb(100, 195, 125)";
@@ -24,8 +30,7 @@ function readPowerState() {
       buttonSvg.style.backgroundColor = "rgb(161, 18, 18)";
       console.log('off');
     }
-  })
-    ();
+  });
 }
 
 /* Toggles the button on the sonoff device */
@@ -33,8 +38,8 @@ function toggleButton() {
   (async () => {
 
     /* toggle device */
-    await connection.toggleDevice('1000a1b44c');
-    await readPowerState();
+    await officalConnection.toggleDevice('1000a1b44c');
+    await readPowerState(officalConnection);
 
   })();
 }
