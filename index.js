@@ -1,12 +1,11 @@
 const ewelink = require('ewelink-api');
 var officalConnection;
 
-async function connectEwelink(email, password, region) {
+async function connectEwelink(email, password) {
   /* ewelink authorisation data*/
   const connection = new ewelink({
     email: email,
     password: password,
-    region: region
   });
 
   return connection;
@@ -30,6 +29,8 @@ function readPowerState(connection) {
       buttonSvg.style.backgroundColor = "rgb(161, 18, 18)";
       console.log('off');
     }
+
+    fillCombobox();
   });
 }
 
@@ -43,3 +44,11 @@ function toggleButton() {
 
   })();
 }
+
+async function fillCombobox(){
+  const devices = await officalConnection.getDevices();
+  devices.forEach(item => {
+    $('#comboBox').prepend('<option>' + item.name + "</option>");
+  });
+}
+
